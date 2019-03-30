@@ -7,3 +7,5 @@ define('DB_USER', 'root');
 define('DB_PASSWORD', '');
 define('DB_CHARSET', 'utf8');
 define('DB_PORT', '43306');
+define('DUMP_FILE_DIR', 'DumpFiles');
+define('PARTIAL_SETTINGS_DIR', 'PartialSettings');

@@ -1,5 +1,5 @@
 <?php
-require('Dump.php');
+require('Class/Dump.php');
 
 
 $param = $argv;
