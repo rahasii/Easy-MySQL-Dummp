@@ -1,7 +1,6 @@
 <?php
 require('Class/Partial.php');
 
-//partial.php 'partial' partial
 $param = $argv;
 $pwd = dirname(__FILE__);
 

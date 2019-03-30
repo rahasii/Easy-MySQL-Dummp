@@ -13,23 +13,29 @@ class Dump
 
     private $_dumpFileName;
 
-    function __construct()
+    function __construct($dumpType = null)
     {
         $this->_command = 'mysqldump';
         $this->_user = ' -u' . DB_USER;
         $this->_password = ' -p' . DB_PASSWORD;
         $this->_host = ' -h' . DB_HOST;
         $this->_port = ' -P' . DB_PORT;
-        $this->_database = ' '.DB_NAME;
+        $this->_database = ' ' . DB_NAME;
 
-        $this->_dumpFileName = $this->makeDumpFileName();
+        $this->_frontPart = $this->_command . $this->_user . $this->_password . $this->_host . $this->_port . $this->_database;
+        $this->_dumpFileName = $this->makeDumpFileName($dumpType);
     }
 
-    public function makeDumpFileName()
+    public function makeDumpFileName($dumpType)
     {
         date_default_timezone_set('Asia/Tokyo');
         $datetime = date('Y-md-His');
-        return DUMP_FILE_DIR.'/'.DB_NAME . '-' . $datetime . '.dump';
+        return DUMP_FILE_DIR . '/' . DB_NAME . '-' . $datetime . '-' . $dumpType . '.dump';
+    }
+
+    public function makeSettingFilePath($settingsName)
+    {
+        return PARTIAL_SETTINGS_DIR . '/' . $settingsName . '.text';
     }
 
     public function dumpFull()
@@ -39,12 +45,13 @@ class Dump
 
     public function dumpAll()
     {
-        return $this->_command.$this->_user.$this->_password.$this->_host.$this->_port.$this->_database.' > '.$this->_dumpFileName;
+        return $this->_frontPart . ' > ' . $this->_dumpFileName;
     }
 
-    public function dumpPartial()
+    public function dumpPartial($settingFile)
     {
-
+        $settingFilePath = self::makeSettingFilePath($settingFile);
+        return $this->_frontPart . ' `cat ' . $settingFilePath . '`' . ' > ' . $this->_dumpFileName;
     }
 
 }

@@ -4,17 +4,17 @@ require('Class/Dump.php');
 
 $param = $argv;
 $pwd = dirname(__FILE__);
+$dumpType = $argv[1];
 
-if(isset($argv[1])){
-    $dumpType = $argv[1];
-}else{
-    $dumpType = 'all';
-}
 
-$dump = new Dump();
+$dump = new Dump($dumpType);
 switch ($dumpType){
     case 'all' :
         echo exec($dump->dumpAll());
+        break;
+    case 'partial' :
+        $settingFile = $argv[2];
+        echo exec($dump->dumpPartial($settingFile));
         break;
     default:
         break;
