@@ -31,10 +31,10 @@ class Partial
         return PARTIAL_SETTINGS_DIR.'/'.$settingsName . '.text';
     }
 
-    public function makePartialSettingsFile($searchWord)
+    public function makePartialSettingsFile($searchWord,$redirection)
     {
         return $this->_command . $this->_user . $this->_password . $this->_host . $this->_port . $this->_database .
-            ' -N -e "show tables like ' . "'".$searchWord."'" . '" > '.$this->_partialSettingsName;
+            ' -N -e "show tables like ' . "'".$searchWord."'" . '" '.$redirection.' '.$this->_partialSettingsName;
     }
 
 
